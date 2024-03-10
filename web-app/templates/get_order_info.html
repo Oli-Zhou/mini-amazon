@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Order Details
+{% endblock %}
+
+{% block body %}
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section bg-image" data-bg=".png">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="page-banner text-left">
+                    <h2>Order Details</h2>
+                    <ul class="page-breadcrumb">
+                        <!-- Return to home page -->
+                        <li><a href="/">Home</a></li>
+                        <li>Order Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Banner Section End -->
+<div class="myaccount-content" style="padding-left: 140px">
+    <h3>Order/Package Info</h3>
+    <div class="account-details-form">
+        <div class="row">
+            <div class="col-12 mb-30">
+                <h4>Purchase Quantity: {{package.purchase_quantity}}</h4>
+            </div>
+            <div class="col-12 mb-30">
+                <h4>Total Price: {{total_price|floatformat:2}}</h4>
+            </div>
+            <div class="col-12 mb-30">
+                {% if package.status == 1 %}
+                <h4>Status: Bought</h4>
+                {% elif package.status == 2 %}
+                <h4>Status: Packing</h4>
+                {% elif package.status == 3 %}
+                <h4>Status: Packed</h4>
+                {% elif package.status == 4 %}
+                <h4>Status: Loading</h4>
+                {% elif package.status == 5 %}
+                <h4>Status: Loaded</h4>
+                {% elif package.status == 6 %}
+                <h4>Status: Delivering</h4>
+                {% elif package.status == 7 %}
+                <h4>Status: Delivered</h4>
+                {% endif %}
+            </div>
+            {% if package.status > 0 %}
+            <div class="col-12 mb-30">
+                <h4>UPS Account Name: {{package.ups_name.ups_name}}</h4>
+            </div>
+            <div class="col-12 mb-30">
+                <h4>Destination Address: ({{ package.dest_address.address_x }}, {{ package.dest_address.address_y }})</h4>
+            </div>
+            {% endif %}
+            {% if package.status == 7 %}
+            <div class="col-12 mb-30">
+                <h4>Rating After Delivery: {{package.rating}}</h4>
+            </div>
+            <!-- ???????????????? -->
+            <div class="col-12 mb-30">
+                <h4>Truck ID: {{package.truck_id}}</h4>
+            </div>
+            <div class="col-12 mb-30">
+                <h4>Tracking Number: {{package.id}}</h4>
+            </div>
+            <div class="col-12 mb-30">
+                <h4>Warehouse ID: {{package.warehouse_id}}</h4>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <h3>Product Info</h3>
+    <div class="account-details-form">
+        <div class="row">
+            <div class="col-12 mb-30">
+                <h4>Product Name: {{package.product_id.pdname}}</h4>
+            </div>
+            <div class="col-12 mb-30">
+                <div class="product-image">
+                    <a href="/product_details/{{package.product_id.id}}/">
+                        <img src="{{ package.product_id.image.url }}" class="img-fluid" alt="" >
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 mb-30">
+                <h4>Description: {{package.product_id.description}}</h4>
+            </div>
+            <div class="col-12 mb-30">
+                <h4>Unit Price: {{package.product_id.price}}</h4>
+            </div>
+            <div class="col-12 mb-30">
+                <h4>Average Rating: {{package.product_id.avg_rating}}</h4>
+            </div>
+            <div class="col-12 mb-30">
+                <h4>Product Category: {{package.product_id.category}}</h4>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

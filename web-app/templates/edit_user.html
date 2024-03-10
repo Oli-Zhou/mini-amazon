@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Account Details
+{% endblock %}
+
+{% block body %}
+
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section bg-image" data-bg=".png">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="page-banner text-left">
+                    <h2>Edit Account Details</h2>
+                    <ul class="page-breadcrumb">
+                        <!-- Return to home page -->
+                        <li><a href="/">Home</a></li>
+                        <li>Edit Account Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if error_msg %}
+            <div class="container" style="text-align: center;">
+                <br>
+                <h2 style="color: rgb(160, 0, 0); ;"><strong>{{error_msg}}</strong></h2>
+                <br><br>
+            </div>
+{% endif %}
+{% if error_reg %}
+            <div class="container" style="text-align: center;">
+                <br>
+                <h2 style="color: rgb(160, 0, 0); ;"><strong>{{error_reg}}</strong></h2>
+                <br><br>
+            </div>
+{% endif %}
+{% if username %}
+<div class="container">
+    <form action="/accounts/editAccount/user/" method="post">
+        {% csrf_token %} 
+        <h2> Edit User information</h2>
+        <br>
+        <label for="">Username</label>
+        <input type="username" name="username", value="{{username}}" placeholder="" class="form-control" style="border-radius: 20px;" Required>
+        <br>
+        <label for="">Email</label>
+        <input type="email" name="email", value="{{email}}" placeholder="" class="form-control" style="border-radius: 20px;" Required>
+        <br>
+        <!-- <button type="submit">Submit</button> -->
+        <div class="Edit">
+            <button type="submit" class="btn">Submit</button>
+        </div>
+        <br />
+        <br />
+    </form>
+</div>
+{% endif %}
+
+
+{% if upsname %}
+<div class="container">
+    <form action="/accounts/editAccount/ups/" method="post">
+        {% csrf_token %} 
+        <h2> Edit UPS Account</h2>
+        <br>
+        <label for="">UPS Account Username</label>
+        <input type="ups_name" name="ups_name", value="{{upsname}}" placeholder="" class="form-control" style="border-radius: 20px;" Required>
+        <br>
+        <!-- <button type="submit">Submit</button> -->
+        <div class="Edit">
+            <button type="submit" class="btn">Submit</button>
+        </div>
+        <br />
+        <br />
+    </form>
+</div>
+{% endif %}
+
+
+
+
+{% if edit_address %}
+<div class="container">
+    <form action="/accounts/editAccount/address/{{address_id}}/" method="post">
+        {% csrf_token %} 
+        <h2> Edit an Address </h2>
+        <br>
+        <label for="">X value</label>
+        <input type="address_x" name="address_x", value="{{address_x}}" placeholder="" class="form-control" style="border-radius: 20px;" Required>
+        <br>
+        <label for="">Y value</label>
+        <input type="address_y" name="address_y", value="{{address_y}}" placeholder="" class="form-control" style="border-radius: 20px;" Required>
+        <br>
+        <!-- <button type="submit">Submit</button> -->
+        <div class="Edit">
+            <button type="submit" class="btn">Edit this Address</button>
+        </div>
+        <br />
+        <br />
+    </form>
+</div>
+{% endif %}
+
+
+
+
+{% if add_address %}
+<div class="container">
+    <form action="/accounts/editAccount/address/" method="post">
+        {% csrf_token %} 
+        <h2> Add an Address </h2>
+        <br>
+        <label for="">X value</label>
+        <input type="address_x" name="address_x", value="{{address_x}}" placeholder="" class="form-control" style="border-radius: 20px;" Required>
+        <br>
+        <label for="">Y value</label>
+        <input type="address_y" name="address_y", value="{{address_y}}" placeholder="" class="form-control" style="border-radius: 20px;" Required>
+        <br>
+        <!-- <button type="submit">Submit</button> -->
+        <div class="Edit">
+            <button type="submit" class="btn">Add this Address</button>
+        </div>
+        <br />
+        <br />
+    </form>
+</div>
+{% endif %}
+{% endblock %}

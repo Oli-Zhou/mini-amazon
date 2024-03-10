@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <!-- resulted product list -->
+    {% if results %}
+        <!-- Page Banner Section Start -->
+        <div class="page-banner-section section bg-image" data-bg=".png">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="page-banner text-left">
+                            {% if search %}
+                                <h2>{{search}}</h2>
+                                <ul class="page-breadcrumb">
+                                    <!-- Return to home page -->
+                                    <li><a href="/">Home</a></li>
+                                    {% if catName %}
+                                        <li>{{catName}}</li>
+                                    {% else %}
+                                        <li>Search Results</li>
+                                    {% endif %}
+                                </ul>
+                            {% else %}
+                                <h2>{{catName}}</h2>
+                                <ul class="page-breadcrumb">
+                                    <!-- Return to home page -->
+                                    <li><a href="/">Home</a></li>
+                                    <li>Search Results</li>
+                                </ul>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+                {% if catName %}
+                <br></br>
+                <form action="/search/{{catName}}/" method="post">
+                    <input type="text" name = "search_title" placeholder="Search in {{catName}}" class="form-control" style="border-radius: 20px;">
+                </form>
+                <br></br>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            {% for result in results %}
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <!--  Single Grid product Start -->
+                <div class="single-grid-product mb-40">
+                    <div class="product-image">
+                        <div class="product-label">
+                            <span>NEW</span>
+                        </div>
+                        <a href="/product_details/{{result.id}}/">
+                            <img src="{{ result.image.url }}" class="img-fluid" alt="" >
+                        </a>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="title"> <a href="/product_details/{{result.id}}/">{{ result.pdname }}</a></h3>
+                        <p class="product-price">${{ result.price|floatformat:2 }}</p>
+                        <!-- <p class="product-price"><span class="discounted-price">${{ result.price|floatformat:2 }}</span> <span class="main-price discounted">$230.00</span></p> -->
+                    </div>
+                </div>
+                <!--  Single Grid product End -->
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="container">
+            <br></br><br></br><br></br>
+            <div class="page-banner text-left">
+                <h2 class="m-4">Oops!</h2>
+                <h2 class="m-4">Nothing match your search</h2>
+                <br></br><br></br><br></br><br></br>
+            </div>
+        </div>
+    {% endif %}
+	{% endblock body %}
+	

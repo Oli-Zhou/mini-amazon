@@ -1,0 +1,2 @@
+psycopg2
+protobuf==3.20.*

@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% block title %}
+    Product Details
+{% endblock %}
+
+{% block body %}
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section bg-image" data-bg=".png">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="page-banner text-left">
+                    <h2>Product Details</h2>
+                    <ul class="page-breadcrumb">
+                        <!-- Return to home page -->
+                        <li><a href="/">Home</a></li>
+                        <li>Product Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Banner Section End -->
+<!-- Single Product Section Start -->
+<div class="single-product-section section pt-60 pt-lg-40 pt-md-30 pt-sm-20 pt-xs-25 pb-100 pb-lg-80 pb-md-70 pb-sm-30 pb-xs-20">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="shop-area">
+                    <div class="row">
+                        <div class="col-md-6 pr-35 pr-lg-15 pr-md-15 pr-sm-15 pr-xs-15">
+                            <!-- Product Details Left: image -->
+                            <div class="product-details-left">
+                                <div class="product-details-images">
+                                    <div class="lg-image">
+                                        <!-- ??????????????iamge source -->
+                                        <img src="{{ product.image.url }}" alt="">
+                                        <a href="{{ product.image.url }}" class="popup-img venobox" data-gall="myGallery"><i class="fa fa-expand"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Product Details Left -->
+                        </div>
+                        <div class="col-md-6">
+                            <!--Product Details Content Start-->
+                            <div class="product-details-content">
+                                <h2>{{ product.pdname }}</h2>
+                                <div class="single-product-reviews">{{product.avg_rating|floatformat:1}}
+                                    {% if product.avg_rating == 1 %}   
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    {% elif product.avg_rating > 1 and product.avg_rating < 2 %}
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star-half-full active"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    {% elif product.avg_rating == 2 %}
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    {% elif product.avg_rating > 2 and product.avg_rating < 3 %}
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star-half-full active"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    {% elif product.avg_rating == 3 %}
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    {% elif product.avg_rating > 3 and product.avg_rating < 4 %}
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star-half-full active"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    {% elif product.avg_rating == 4 %}
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    {% elif product.avg_rating > 4 and product.avg_rating < 5 %}
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star-half-full active"></i>
+                                    {% elif product.avg_rating == 5 %}
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                        <i class="fa fa-star active"></i>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if product.num_rating == 0 or product.num_rating == 1 %}
+                                    <div class="single-product-reviews">({{product.num_rating}} customer review)</div>
+                                        {% else %}
+                                        <div class="single-product-reviews">({{product.num_rating}} customers review)</div>
+                                        {% endif %}
+                                
+                                <div class="single-product-price">
+                                    <span class="price new-price" style="color: rgb(140, 0, 0); ">${{ product.price|floatformat:2 }}</span>
+                                    <span style="font-size: medium">
+                                        &
+                                        <b>Free shipping</b>
+                                    </span>
+                                </div>
+                                <div class="product-description">
+                                    <p>
+                                        {{product.description}}
+                                    </p>
+                                </div>
+                                <div class="product-meta">
+                                    <span class="posted-in">
+                                        <!--???????????????????????????????-->
+                                        Category: <a href="/search/{{product.category.name}}/" style="color: blue;">{{product.category.name}}</a>
+                                    </span>
+                                </div>
+                                <div class="single-product-quantity">
+                                    <form class="add-quantity" method="POST" action="#">
+                                        <div class="product-quantity">
+                                            <input type="number" name="quantity" min="1" max="999" placeholder="Qty" required>
+                                        </div>
+                                        <div class="add-to-link">
+                                            <button type="submit" name="buy_now" class="btn"><i class="fa fa-shopping-bag"></i>buy now</button>
+                                            <button type="submit" name="add_to_cart" class="btn"><i class="fa fa-shopping-basket"></i>add to cart</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Single Product Section End -->
+<!--Product section start-->
+<div class="product-section section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-60 pb-lg-40 pb-md-30 pb-sm-20 pb-xs-15">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="section-title text-center mb-50 mb-xs-20">
+                    <h2>Related Products</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row product-slider">
+            {% for related_product in related_products %}
+            <div class="col">
+                <!--  Single Grid product Start -->
+                <div class="single-grid-product mb-40">
+                    <div class="product-image">
+                        <div class="product-label">
+                            <span>NEW</span>
+                        </div>
+                        <a href="/product_details/{{ related_product.id }}/">
+                            <!--  ????????????????? -->
+                            <img src="{{ related_product.image.url }}" class="img-fluid" alt="">
+                        </a>
+                        <!-- 
+                        <div class="product-action">
+                            <ul>
+                                <li><a href="/product_details/{{ related_product.id }}/" data-toggle="modal" title="View"><i class="fa fa-eye"></i></a></li>
+                            </ul>
+                        </div>
+                        -->
+                    </div>
+                    <div class="product-content">
+                        <h3 class="title"> <a href="/product_details/{{ related_product.id }}/">{{ related_product.pdname }}</a></h3>
+                        <p class="product-price"><span class="discounted-price">${{ related_product.price|floatformat:2 }}
+                    </div>
+                </div>
+                <!--  Single Grid product End -->
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Checkout Result
+{% endblock %}
+
+{% block body %}
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section bg-image" data-bg=".png">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="page-banner text-left">
+                    <h2>Checkout Result</h2>
+                    <ul class="page-breadcrumb">
+                        <!-- Return to home page -->
+                        <li><a href="/">Home</a></li>
+                        <li>Checkout Result</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <br></br><br></br><br></br>
+    <div class="page-banner text-left">
+        <h2 class="m-3">{{result_mssg}}</h2>
+        {% if reason_id == 1 %}
+        <h2 class="m-4">Because your account is not yet linked to a UPS account. Please do it before buying.</h2>
+        <a href="/accounts/get_user_info/" class="m-4"><font color="red" size="5">
+            Go to the Account Details page to associate with a UPS account.</br> You can then proceed with your payment.
+        </font></a>
+        {% elif reason_id == 2 %}
+        <h2 class="m-4">Because you did not select a common shipping address or input a new shipping address.</h2>
+        {% elif reason_id == 3 %}
+        <h2 class="m-4">Next, you just need to wait for your package at home.</h2>
+        {% elif reason_id == 4 %}
+        <h2 class="m-4">{{reason}}</h2>
+        {% elif reason_id == 5 %}
+        <h2 class="m-4">{{reason}}</h2>
+        {% endif %}
+        <br></br><br></br><br></br><br></br>
+    </div>
+</div>
+
+
+{% endblock %}

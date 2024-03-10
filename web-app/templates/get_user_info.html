@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Account Details
+{% endblock %}
+
+{% block body %}
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section bg-image" data-bg=".png">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="page-banner text-left">
+                    <h2>Account Details</h2>
+                    <ul class="page-breadcrumb">
+                        <!-- Return to home page -->
+                        <li><a href="/">Home</a></li>
+                        <li>Account Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Banner Section End -->
+<div class="myaccount-content" style="padding-left: 140px">
+    <h3>User Info</h3>
+    <div class="account-details-form">
+        <form action="#">
+            <div class="row">
+                <div class="col-12 mb-30">
+                    <h4>User Name: {{username}}</h4>
+                </div>
+                <div class="col-12 mb-30">
+                    <h4>Email: {{email}}</h4>
+                    <div class="text-right">
+                        <a href="/accounts/editAccount/user/" class="btn">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <h3>UPS Account</h3>
+    <div class="account-details-form">
+        <form action="#">
+            <div class="row">
+                <div class="col-12 mb-30">
+                    <h4>UPS Account Name: {{ups_name}}</h4>
+                    <div class="text-right">
+                        <a href="/accounts/editAccount/ups/" class="btn">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <h3>Frequently Used Addresses</h3>
+    <div class="account-details-form">
+        <form action="#">
+            <div class="row">
+                <div class="col-12 mb-30">
+                    {% for address in address_set %}
+                    <h4>* x: {{address.address_x}}; y: {{address.address_y}}</h4>
+                    <div class="text-right">
+                        <a href="/accounts/editAccount/address/{{address.pk}}/" class="btn">Edit</a>
+                        <a href="/accounts/editAccount/delete_address/{{address.pk}}/" class="btn">Delete</a>
+                    </div>
+                    {% endfor %}
+                    <br />
+                    <div class="text-right">
+                        <a href="/accounts/editAccount/address/" class="btn">Add New Address</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+4.19:
+When designing the communication between front and back ends, we have considered two ways which are socket and shared memory. The disadvantage of shared memory is that when building the docker we must consider having the front and back ends in the same docker container for the purpose of sharing the same database. This will make docker configuration difficult. However, when using sockets, we need to consider the disconnection of sockets and the miscommunication of messages. After a trade-off, we decided to use a shared database. Thus, our front-end can refresh the page and query the database again to get the information about the "status" of the package.
+
+4.20:
+We realized that product viewing and searching should be available for users who are not logged in. Therefore, we decided to classify some of the features as not requiring user login, such as product view and search, contact us, subscription, etc.
+
+4.21:
+When designing the html, we wanted to have the same header on each page, which would make it easier for users to jump from page to page. So, we wrote the header code in each html document. However, when we searched for information about html, we found the concept of template extending, which reduces the duplication of our code.
+
+4.22:
+While implementing the backend, we realized the need for the concept of inventory, so we added the new class named “Inventories”.
+
+4.23:
+On this day, we started testing with UPS. The world kept reporting errors when accepting our information about the warehouse. Then we found that every time we reconnected with the world, the warehouse id did not start from 1, even though we cleared the Warehouse Table data with "TRUNCATE" command. So, we added the "RESTART IDENTITY" command to make the id start from 1.
+
+4.23:
+SQL syntax is very prone to detail errors, for example, forgetting to add parentheses. In addition, the column of some tables is not simply data, but an object, which can easily cause our SQL statement to report an error. For example, the product_id column of Packages Table is not a product id but a product object. If we want to find the real product id, we need to get it from the product object instead of making the product_id equal to the product id directly.
+
+4.24:
+Since we consider the case that commands sent to world and ups will not be received, we determine whether to resend commands to them by saving and querying the ack from world and ups. However, due to our design, in the thread that handles commands from ups, we also make the action of sending commands to ups. This causes the thread to get stuck in a loop of sending commands, because the thread cannot receive ack from ups while sending commands to ups. Therefore, we add more threads to handle commands from ups and world.
+
+4.24:
+We considered a new dangerous case: if our ack is not sent to world and ups on time, they may send the same commands repeatedly, which will cause us to process them multiple times. We decided to record the seqnum of each world and ups command to avoid this situation.
+
+4.25:
+When we set up our email system, we found & solved these problems. (1) We decided to use Gmail, but we found that google turned off the feature of less secure apps to access Gmail for account security. However, through our search we found that App Passwords can make third party access to Gmail. (2) Initially, we send an email to the user whenever the status of the package (including the 8 states) changes. However, we found that when the number of packages was high, more than 30 emails were sent within a few minutes, which led to our mailbox being disabled. So, we decided to send notification emails only when users checkout and when packages are delivered. (3) Since slower email delivery affects the delivery time of the package, we add additional threads for email delivery.
+
+4.26:
+Originally, we thought we would not be able to implement the subscription feature because we would have to constantly check the database for product information and send notification emails to users if we found changes. However, we realized that we could add an additional thread on the backend to constantly check the database for changes in the product information and send emails to subscribers.
+
+4.27:
+When configuring docker, we found that we needed to give docker permission to change the static/pictures directory, which would allow us to successfully add pictures to the newly added products, and then we can successfully add new products.

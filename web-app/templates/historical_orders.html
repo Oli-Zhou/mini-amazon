@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Historical Orders
+{% endblock %}
+
+{% block body %}
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section bg-image" data-bg=".png">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="page-banner text-left">
+                    <h2>Historical Orders</h2>
+                    <ul class="page-breadcrumb">
+                        <!-- Return to home page -->
+                        <li><a href="/">Home</a></li>
+                        <li>Historical Orders</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Banner Section End -->
+<div class="myaccount-content" style="padding-left: 140px">
+    <h3>Orders</h3>
+    {% if package_results %}
+        <h3>Search by product name:</h3>
+        <div class="myaccount-table table-responsive text-center">
+            <!-- Search Bar Begin -->
+            
+            <div class="form-group">
+                <form action="/accounts/historical_orders/" method="post">
+                    <input type="text" name = "search_by_name" placeholder="Please input a product name to search orders" class="form-control" style="border-radius: 20px;">
+                </form>
+            </div>
+        </div>
+        <h3>Or search by package status:</h3>
+        <div class="myaccount-table table-responsive text-center">
+            <div class="form-group">
+                <form action="/accounts/historical_orders/" method="post">
+                    <input type="text" name = "search_by_status" list="typelist" placeholder="Please input a product name to search orders" class="form-control" style="border-radius: 20px;">
+                    <datalist id="typelist">
+                        <option>Bought</option>
+                        <option>Packing</option>
+                        <option>Packed</option>
+                        <option>Loading</option>
+                        <option>Loaded</option>
+                        <option>Delivering</option>
+                        <option>Delivered</option>
+                    </datalist>
+                </form>
+            </div>
+            <!-- Search Bar End -->
+        </div>
+        <br />
+        <div class="myaccount-table table-responsive text-center">
+            <!-- Orders Begin -->
+            <div class="myaccount-table table-responsive text-center">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th><h4>Product Image</h4></th>
+                            <th><h4>Product Name</h4></th>
+                            <th><h4>Purchase Quantity</h4></th>
+                            <th><h4>Unit Price</h4></th>
+                            <th><h4>Create Time</h4></th>
+                            <th><h4>Status</h4></th>
+                            <th><h4>Action</h4></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for package in package_results %}
+                        <tr>
+                            <th>
+                                <h4>
+                                    <a href="/product_details/{{package.product_id.id}}/">
+                                        <img src="{{ package.product_id.image.url }}" alt="">
+                                    </a>
+                                </h4></th>
+                            <td><h4>{{package.product_id.pdname}}</h4></td>
+                            <td><h4>{{package.purchase_quantity}}</h4></td>
+                            <td><h4>{{package.product_id.price}}</h4></td>
+                            <td><h4>{{package.create_time|date:"F d, Y"}}</h4></td>
+                            <td>
+                                {% if package.status == 1 %}
+                                <h4>Bought</h4>
+                                {% elif package.status == 2 %}
+                                <h4>Packing</h4>
+                                {% elif package.status == 3 %}
+                                <h4>Packed</h4>
+                                {% elif package.status == 4 %}
+                                <h4>Loading</h4>
+                                {% elif package.status == 5 %}
+                                <h4>Loaded</h4>
+                                {% elif package.status == 6 %}
+                                <h4>Delivering</h4>
+                                {% elif package.status == 7 %}
+                                <h4>Delivered</h4>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <a href="/accounts/get_order_info/{{ package.id }}/" class="btn">View Details</a>
+                                {% if package.status == 7 %}
+                                <br />
+                                <br />
+                                <a href="/rate_product/{{ package.id }}/" class="btn">Rate</a>
+                                <br />
+                                <br />
+                                <a href="/accounts/delete_order/{{ package.id }}/" class="btn">Delete</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- orders End -->
+        </div>
+    {% else %}
+        <h4>What a pity! No order found.</h4>
+        <br/>
+        <a href="/search" class="btn">But You Can Shop Now!</a>
+    {% endif %}
+</div>
+
+{% endblock %}

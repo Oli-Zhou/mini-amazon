@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Login Page
+{% endblock %}
+
+{% block body %}
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section bg-image" data-bg=".png">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="page-banner text-left">
+                    <h2>Register</h2>
+                    <ul class="page-breadcrumb">
+                        <li><a href="/">Home</a></li>
+                        <li>Register</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Banner Section End -->
+{% if error_reg %}
+            <div class="container" style="text-align: center;">
+                <br>
+                <h2 style="color: rgb(160, 0, 0); ;"><strong>{{error_reg}}</strong></h2>
+                <br><br>
+            </div>
+{% endif %}
+<!--Login Register section start-->
+<div class="login-register-section section pt-90 pt-lg-70 pt-md-60 pt-sm-55 pt-xs-45  pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20">
+    <div class="container">
+        <div class="row">
+            <!--Register Form Start-->
+            <div class="col-md-6 col-sm-6">
+                <div class="customer-login-register register-pt-0">
+                    <div class="form-register-title">
+                        <h2>Register</h2>
+                    </div>
+                    <div class="register-form">
+                        <!--????????? action ??????-->
+                        <form method="post" action="#">
+                            <div class="form-fild">
+                                <p><label>User Name <span class="required">*</span></label></p>
+                                <input name="username" value="" type="text">
+                            </div>
+                            <div class="form-fild">
+                                <p><label>Email Address <span class="required">*</span></label></p>
+                                <input name="email" value="" type="email">
+                            </div>
+                            <div class="form-fild">
+                                <p><label>Password <span class="required">*</span></label></p>
+                                <input name="password" value="" type="password">
+                            </div>
+                            <div class="form-fild">
+                                <p><label>Confirm Password <span class="required">*</span></label></p>
+                                <input name="confirm_password" value="" type="password">
+                            </div>
+                            <div class="register-submit">
+                                <button type="submit" class="btn">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--Register Form End-->
+    </div>
+</div>
+<!--Login Register section end-->
+
+{% endblock %}

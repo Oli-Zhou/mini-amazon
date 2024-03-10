@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Rating
+{% endblock %}
+
+{% block body %}
+
+
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section bg-image" data-bg=".png">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="page-banner text-left">
+                    <h2>Edit Account Details</h2>
+                    <ul class="page-breadcrumb">
+                        <!-- Return to home page -->
+                        <li><a href="/">Home</a></li>
+                        <li>Edit Account Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% if message %}
+            <div class="container" style="text-align: center;">
+                <br>
+                <h2 style="color: rgb(160, 0, 0); ;"><strong>{{message}}</strong></h2>
+                <br>
+            </div>
+{% endif %}
+
+
+{% if rated %}
+<div class="text-center"> You rated {{rated}}   
+    {% if rated == 1 %}   
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+    {% elif rated > 1 and rated < 2 %}
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star-half-full active"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+    {% elif rated == 2 %}
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+    {% elif rated > 2 and rated < 3 %}
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star-half-full active"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+    {% elif rated == 3 %}
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star-o"></i>
+        <i class="fa fa-star-o"></i>
+    {% elif rated > 3 and rated < 4 %}
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star-half-full active"></i>
+        <i class="fa fa-star-o"></i>
+    {% elif rated == 4 %}
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star-o"></i>
+    {% elif rated > 4 and rated < 5 %}
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star-half-full active"></i>
+    {% elif rated == 5 %}
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+        <i class="fa fa-star active"></i>
+    </div>
+    {% endif %}
+
+<div class="text-center"><br><br>
+    <a href="/product_details/{{product_id}}/" class="btn">View Product Page</a>
+</div>
+</div><br><br><br><br>
+{% else %}
+<div class="container">
+    <form action="/rate_product/{{package_id}}/" method="post">
+        {% csrf_token %} 
+        <h2> Rate this product: {{product_name}}
+            <div class="text-right"><a href="/accounts/get_order_info/{{ package_id }}/" class="btn">View Order Details</a>
+                <a href="/product_details/{{product_id}}/" class="btn">View Product Page</a></div><br>
+            
+        </h2>
+        
+
+        <div class="container">
+        <div class="single-product-quantity">
+            <form class="add-quantity" method="POST" action="#">
+                <div class="product-quantity">
+                    <input type="number" name="rating" min="1" max="5" placeholder=" " required>
+                </div>
+                <div class="add-to-link">
+                    <!-- <button type="submit" class="btn" name="rate"><i class="fa fa-shopping-bag"></i>Confirm</button> -->
+                    <button type="submit" class="btn">Submit</button>
+                </div>
+            </form>
+        </div></div>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

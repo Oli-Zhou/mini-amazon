@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Account Details
+{% endblock %}
+
+{% block body %}
+
+<!-- Page Banner Section Start -->
+<div class="page-banner-section section bg-image" data-bg=".png">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="page-banner text-left">
+                    <h2>Checkout</h2>
+                    <ul class="page-breadcrumb">
+                        <!-- Return to home page -->
+                        <li><a href="/">Home</a></li>
+                        <li>Checkout</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if no_order %}
+<div class="container">
+    <br></br><br></br><br></br>
+    <div class="page-banner text-left">
+        <h4>What a pity! No order found in shopping cart, so you cannot checkout now.</h4>
+        <br />
+        <a href="/search" class="btn">But You Can Shop Now!</a>
+    </div>
+</div>
+<br/>
+{% else %}
+
+<!--Checkout section start-->
+<div class="checkout-section section pt-90 pt-lg-70 pt-md-60 pt-sm-50 pt-xs-40  pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Checkout Form Start-->
+                <form action="/checkout/{{ results }}/" class="checkout-form" method="post">
+                    <div class="row row-40">
+                        <div class="col-lg-7">
+                            <!-- Shipping Address -->
+                            <div id="billing-form" class="mb-10">
+                                <h4 class="checkout-title">Shipping Address</h4>
+                                <div class="row">
+                                    <div class="col-md-6 col-12 mb-20">
+                                        <label>Choose an address from frequently used addresses</label>
+                                        <select class="nice-select" name="address">
+                                            <option value="">--Select--</option>
+                                            {% for address in addresses %}
+                                            <option>{{address.address_x}}, {{address.address_y}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-12 mb-20">
+                                        <div class="check-box">
+                                            <input type="checkbox" id="shiping_address" data-shipping="" name="is_add_address">
+                                            <label for="shiping_address">Ship to a New Address</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- New Shipping Address -->
+                            <div id="shipping-form">
+                                <h3 class="checkout-title">Add a New Shipping Address</h3>
+                                <div class="row">
+                                    <div class="col-md-6 col-12 mb-20">
+                                        <label>Address X</label>
+                                        <input type="number" name="x" placeholder="X">
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-20">
+                                        <label>Address Y</label>
+                                        <input type="number" name="y" placeholder="Y">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- UPS -->
+                            <div id="billing-form" class="mb-10">
+                                <h4 class="checkout-title">UPS Account</h4>
+                                <div class="row">
+                                    <div class="col-md-6 col-12 mb-20">
+                                        {% if ups %}
+                                        <!-- user has ups account -->
+                                        {% for a_ups in ups %}
+                                        <label>frequently used UPS Name: {{a_ups.ups_name}}</label>
+                                        {% endfor %}
+                                        {% else %}
+                                        <!-- user does not have ups account -->
+                                        <a href="/accounts/get_user_info/"><font color="red" size="3">
+                                            Your account is not yet associated with any UPS account.</br> Please go to the Account Details page to do this.</br> You can then proceed with your payment.
+                                        </font></a>
+                                        {% endif %}
+                                        <!-- <input type="hidden" name="ups" value="{{ package.item.id }}"> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="row">
+                                <!-- Cart Total -->
+                                <div class="col-12 mb-60">
+                                    <h4 class="checkout-title">Cart Total</h4>
+                                    <div class="checkout-cart-total">
+                                        <h4>Product <span>Total</span></h4>
+                                        <ul>
+                                            {% for package in packages %}
+                                            <li>{{package.product_id.pdname}} X {{package.purchase_quantity}} <span>${{ package.product_id.price|floatformat:2 }}</span></li>
+                                            {% endfor %}
+                                        </ul>
+                                        <p>Sub Total <span>${{total|floatformat:2 }}</span></p>
+                                        <p>Shipping Fee <span>$00.00</span></p>
+                                        <h4>Grand Total <span>${{total|floatformat:2 }}</span></h4>
+                                    </div>
+                                </div>
+                                <!-- Payment Method -->
+                                <div class="col-12 mb-30">
+                                    <h4 class="checkout-title">Payment Method</h4>
+                                    <div class="checkout-payment-method">
+                                        <div class="single-method">
+                                            <input type="radio" id="payment_check" name="payment-method" value="check">
+                                            <label for="payment_check">Check Payment</label>
+                                            <p data-method="check">Please send a Check to Store with Store Street, Store Town, Store State, Store Postcode and so on.</p>
+                                        </div>
+                                        <div class="single-method">
+                                            <input type="radio" id="payment_bank" name="payment-method" value="bank">
+                                            <label for="payment_bank">Credit Card</label>
+                                            <p data-method="bank">Sorry, we do not support payment by credit card at this time.</p>
+                                        </div>
+                                        <div class="single-method">
+                                            <input type="radio" id="payment_cash" name="payment-method" value="cash">
+                                            <label for="payment_cash">Cash on Delivery</label>
+                                            <p data-method="cash">Please send your Cash to Store with Store Street, Store Town, Store State, Store Postcode and so on.</p>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="place-order btn btn-lg btn-round">Place order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
